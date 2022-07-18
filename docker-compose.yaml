@@ -16,7 +16,7 @@ services:
       - db
     volumes:
       - type: bind
-        source: ./express-api
+        source: ./server
         target: /server
     command: bash -c "npm install && npm run dev"
   db:
