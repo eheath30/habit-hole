@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require("jsonwebtoken")
 
-const Post = require('../models/habits');
+const Post = require('../models/habit');
 
 function verifyToken(req, res, next) {
     const token = req.headers["authorization"];

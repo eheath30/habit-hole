@@ -18,9 +18,9 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findByUsername(req.body.username)
         if(!user){ throw new Error('No user with this username') }
-        const authed = bcrypt.compare(req.body.password, user.passwordDigest)
+        const authed = await bcrypt.compare(req.body.password, user.passwordDigest)
         if (!!authed){
-            console.log(user);
+            // console.log(user);
             const payload = {username: user.username}
             const sendToken = ( err, token ) => {
                 if (err) { throw new Error('Error in token generation')}

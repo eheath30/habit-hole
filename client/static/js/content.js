@@ -23,7 +23,7 @@ main.appendChild(homepage);
 
 function renderLoginForm() {
     const fields = [
-        { tag: 'input', attributes: { type: 'email', name: 'email', placeholder: 'Email' } },
+        { tag: 'input', attributes: { type: 'text', name: 'username', placeholder: 'Username' } },
         { tag: 'input', attributes: { type: 'password', name: 'password', placeholder: 'Password' } },
         { tag: 'input', attributes: { type: 'submit', value: 'Login' } }
     ]
@@ -42,7 +42,6 @@ function renderLoginForm() {
 function renderRegisterForm() {
     const fields = [
         { tag: 'input', attributes: { type: 'text', name: 'username', placeholder: 'Username' } },
-        { tag: 'input', attributes: { type: 'email', name: 'email', placeholder: 'Email' } },
         { tag: 'input', attributes: { type: 'password', name: 'password', placeholder: 'Password' } },
         { tag: 'input', attributes: { type: 'password', name: 'passwordConfirmation', placeholder: 'Confirm Password' } },
         { tag: 'input', attributes: { type: 'submit', value: 'Create Account' } }
