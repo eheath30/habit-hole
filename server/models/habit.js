@@ -1,19 +1,21 @@
 const db = require('../dbConfig');
 
-class Post {
+class Habit {
     constructor(data) {
-        this.body = data.body
         this.username = data.username
+        this.sleeptarget = data.sleeptarget
+        this.sleepdate = data.sleepdate
+        this.sleephours = data.sleephours
     }
 
     static get all(){
         return new Promise(async (res, rej) => {
             try {
-                let result = await db.query(`SELECT posts.*, users.username as username
-                                                    FROM posts 
-                                                    JOIN users ON posts.user_id = users.id;`);
-                let posts = result.rows.map(r => new Post(r))
-                res(posts)
+                let result = await db.query(`SELECT habits.*, users.username as username
+                                                    FROM habits
+                                                    JOIN users ON habits.userid = users.id;`);
+                let habits = result.rows.map(r => new Habit(r))
+                res(habits)
             } catch (err) {
                 rej(`Error retrieving posts: ${err}`)
             }
@@ -21,4 +23,4 @@ class Post {
     }
 }
 
-module.exports = Post
+module.exports = Habit
