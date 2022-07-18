@@ -58,6 +58,34 @@ function renderRegisterForm() {
     main.appendChild(form);
 }
 
+async function renderFeed() {
+    const feed = document.createElement('section');
+    feed.id = 'feed';
+
+    try {
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(localStorage.getItem('username'))
+        }
+        const r = await fetch(`http://localhost:3000/habits`, options)
+        const postData = await r.json()
+        console.log(postData)
+        const post = document.createElement('div');
+        post.className = 'post';
+        const user = document.createElement('h3');
+        const body = document.createElement('p');
+        user.textContent = postData.username;
+        body.textContent = postData.sleeptarget;
+        post.appendChild(user);
+        post.appendChild(body);
+        feed.appendChild(post);
+        main.appendChild(feed);
+    } catch (err) {
+        console.warn(`Error: ${err}`);
+    }
+}
+
 function renderProfile() {
     const profile = document.createElement('section');
     const greeting = document.createElement('h3');
@@ -71,3 +99,4 @@ function render404() {
     error.textContent = "Oops, we can't find that page sorry!";
     main.appendChild(error);
 }
+

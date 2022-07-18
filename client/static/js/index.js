@@ -10,4 +10,6 @@ async function getAllHabits(){
         console.warn(err);
     }
 
+    // async
+
 }
