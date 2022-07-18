@@ -16,12 +16,12 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const user = await User.findByEmail(req.body.email)
-        if(!user){ throw new Error('No user with this email') }
+        const user = await User.findByUsername(req.body.username)
+        if(!user){ throw new Error('No user with this username') }
         const authed = bcrypt.compare(req.body.password, user.passwordDigest)
         if (!!authed){
             console.log(user);
-            const payload = {username: user.username, email: user.email}
+            const payload = {username: user.username}
             const sendToken = ( err, token ) => {
                 if (err) { throw new Error('Error in token generation')}
                 res.status(200).json({
@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
                     token: token
                 })
             }
-            jwt.sign(payload, process.env.SECRET, {expiresIn:60}, sendToken)
+            jwt.sign(payload, process.env.SECRET, {expiresIn:60 * 60}, sendToken)
         } else {
             throw new Error('User could not be authenticated')
         }
