@@ -1,16 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// const html = fs.readFileSync(path.resolve(__dirname, '/Users/vincent/Desktop/Futureproof/Week4/projectWeek/blogFrontendfinal/Blog_Frontend_PW/client/index.html'), 'utf8');
-// const jsdom = require("jsdom");
-// const { JSDOM } = jsdom;
-
-const { title } = require('process');
 const html = fs.readFileSync(path.resolve(__dirname, 'C:/Users/Elliot Heath/FutureProof/lap2-databases/3week_project/habit-hole/client/index.html'), 'utf8');
-
-
-// const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
-// console.log(dom.window.document.querySelector("p").textContent); //
 
 console.log(html)
 
@@ -71,7 +62,7 @@ describe('index.html', () => {
             expect(ul).toBeTruthy();
         });
         test('It has a main section', () => {
-            let li = document.getElementsByTagName('main');
+            let main = document.getElementsByTagName('main');
             expect(main).toBeTruthy();
         });
         test('it has a script', () => {
@@ -79,12 +70,12 @@ describe('index.html', () => {
             expect(script).toBeTruthy();
         });
         test('it has a title', () => {
-            const title = document.querySelector('title')
-            expect(title.innerText).toBe("Homepage")
+            const title = document.getElementsByTagName('title')
+            expect(title).toBeTruthy();
         });
         test('it has a nav', () => {
-            const section = document.querySelector('nav')
-            expect(section).toBeTruthy();
+            const nav = document.getElementsByTagName('nav')
+            expect(nav).toBeTruthy();
         });
     })
 });
