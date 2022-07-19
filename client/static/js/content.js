@@ -176,7 +176,7 @@ async function renderProfile() {
                 profile.appendChild(form)
                 form.addEventListener('submit', updateSleepTime)
             } else{
-                const WellDone = document.createElement('h3')
+
                 let streak = 0
                 // let compare1 = new Date(postData.sleepdate[6].split('T')[0])
                 // let compare2 = new Date(postData.sleepdate[5].split('T')[0])
@@ -187,15 +187,27 @@ async function renderProfile() {
                         streak = 0
                     }
                 }
-                WellDone.textContent = `Well done, you are on a ${streak} day streak!`
-                award = document.createElement('img')
-                award.src = './static/images/example-award.png';
-                award.setAttribute('alt', 'award')
-                award.setAttribute('class', 'award')
+
+                if (streak == 0) {
+                    const tryHarder = document.createElement('h3')
+                    tryHarder.textContent = `You should be more mindful of your sleep time`
+                    const zeroStreak = document.createElement('h3')
+                    zeroStreak.textContent = `you currently have a 0 day hot-streak.`
+                    profile.appendChild(tryHarder)
+                    profile.appendChild(zeroStreak)
+                }
+                else {
+                    const WellDone = document.createElement('h3')
+                    WellDone.textContent = `Well done, you are on a ${streak} day streak!`
+                    award = document.createElement('img')
+                    award.src = './static/images/example-award.png';
+                    award.setAttribute('alt', 'award')
+                    award.setAttribute('class', 'award')
+                    profile.appendChild(WellDone)
+                    profile.appendChild(award)
+                }
 
 
-                profile.appendChild(WellDone)
-                profile.appendChild(award)
             }
         }
     } catch (err) {
