@@ -39,7 +39,7 @@ function login(data){
     // console.log(data, "data");
     localStorage.setItem('token', data.token);
     localStorage.setItem('username', payload.username);
-    location.hash = '#dashboard';
+    location.hash = '#profile';
 }
 
 function logout(){
