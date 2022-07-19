@@ -176,7 +176,7 @@ async function updateSleepTime(){
             body: JSON.stringify( usernameForm )
         }
         const r = await fetch(`http://localhost:3000/habits/updateSleepTime`, options)
-        // window.location.reload()
+        window.location.reload()
     } catch (err) {
         console.warn(`Error: ${err}`);
     }
