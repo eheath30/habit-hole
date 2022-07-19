@@ -28,31 +28,33 @@ class Habit {
         return new Promise(async (res, rej) => {
             try {
                 //const username = await res.body;
-                console.log(username);
                 let result = await db.query(`SELECT habits.*, users.username as     username
                                                 FROM habits
                                                 JOIN users ON habits.userid = users.id
                                                 WHERE username = $1;`, [username]);
-                let user = new User(result.rows[0])
-                res(user)
+                let habit = new Habit(result.rows[0])
+                res(habit)
             } catch (err) {
                 rej(`Error retrieving user: ${err.message}`)
             }
         })
     }
 
-    /*static create(username, sleeptarget, sleepdate, sleephours){
+    static create(username){
         return new Promise (async (resolve, reject) => {
             try {
                 let user = await User.findByUsername(username);
-                let habitData = await db.query(`INSERT INTO habits (username, sleeptarget, sleepdate, sleephours) VALUES ($1, $2, $3, $4) RETURNING *;`, [ user.id, sleeptarget, sleepdate, sleephours ]);
+                let sleeptarget = null
+                let sleepdate = []
+                let sleephours = []
+                let habitData = await db.query(`INSERT INTO habits (userid, sleeptarget, sleepdate, sleephours) VALUES ($1, $2, $3, $4) RETURNING *;`, [ user.id, sleeptarget, sleepdate, sleephours ]);
                 let newHabit = new Habit(habitData.rows[0]);
                 resolve (newHabit);
             } catch (err) {
                 reject('Error creating habit');
             }
         });
-    }*/
+    }
 
     /*update() {
         return new Promise (async (resolve, reject) => {

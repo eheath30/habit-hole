@@ -61,19 +61,17 @@ function renderRegisterForm() {
 async function renderFeed() {
     const feed = document.createElement('section');
     feed.id = 'feed';
-    username = localStorage.getItem('username');
-    const usernameForm = { 'username': username };
+    let username = localStorage.getItem('username');
+    let usernameForm = { 'username': username };
+    
     try {
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( usernameForm )
         }
-
         const r = await fetch(`http://localhost:3000/habits`, options)
         const postData = await r.json()
-        console.log(r)
-        // console.log(postData)
         const post = document.createElement('div');
         post.className = 'post';
         const user = document.createElement('h3');
