@@ -101,4 +101,4 @@ function render404() {
     main.appendChild(error);
 }
 
-module.exports = {render404, renderProfile, renderFeed, renderRegisterForm, renderLoginForm, renderHomepage}
+// module.exports = {render404, renderProfile, renderFeed, renderRegisterForm, renderLoginForm, renderHomepage}

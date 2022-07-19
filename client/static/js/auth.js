@@ -52,4 +52,4 @@ function currentUser(){
     return username;
 }
 
-module.exports = {currentUser, logout, login, requestRegistration, requestLogin};
+// module.exports = {currentUser, logout, login, requestRegistration, requestLogin};

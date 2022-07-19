@@ -14,4 +14,4 @@ async function getAllHabits(){
 
 }
 
-module.exports = {getAllHabits}
+// module.exports = {getAllHabits}
