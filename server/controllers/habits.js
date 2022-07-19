@@ -30,8 +30,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const user = await Habit.findByUsername(req.body)
-        console.log(user);
+        const user = await Habit.findByUsername(req.body.username)
         res.json(user);
     } catch (err) {
         res.status(401).json({ err: err.message });

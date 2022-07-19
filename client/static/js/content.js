@@ -61,16 +61,19 @@ function renderRegisterForm() {
 async function renderFeed() {
     const feed = document.createElement('section');
     feed.id = 'feed';
-
+    username = localStorage.getItem('username');
+    const usernameForm = { 'username': username };
     try {
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(localStorage.getItem('username'))
+            body: JSON.stringify( usernameForm )
         }
+
         const r = await fetch(`http://localhost:3000/habits`, options)
         const postData = await r.json()
-        console.log(postData)
+        console.log(r)
+        // console.log(postData)
         const post = document.createElement('div');
         post.className = 'post';
         const user = document.createElement('h3');
@@ -99,4 +102,3 @@ function render404() {
     error.textContent = "Oops, we can't find that page sorry!";
     main.appendChild(error);
 }
-
