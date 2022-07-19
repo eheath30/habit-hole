@@ -61,7 +61,20 @@ class Habit {
             try {
                 let user = await User.findByUsername(username);
                 let updatedHabitData = await db.query(`UPDATE habits SET sleeptarget = $2 WHERE userid = $1 RETURNING *;`, [ user.id, sleeptarget ]);
-                let updatedHabit = new Dog(updatedHabitData.rows[0]);
+                let updatedHabit = new Habit(updatedHabitData.rows[0]);
+                resolve (updatedHabit);
+            } catch (err) {
+                reject('Error updating Habit');
+            }
+        });
+    }
+
+    static updateSleepTime(username, sleephour, sleepday) {
+        return new Promise (async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+                let updatedHabitData = await db.query(`UPDATE habits SET sleephours = array_append(sleephours, $2), sleepdate = array_append(sleepdate, $3) WHERE userid = $1 RETURNING *;`, [ user.id, sleephour, sleepday ]);
+                let updatedHabit = new Habit(updatedHabitData.rows[0]);
                 resolve (updatedHabit);
             } catch (err) {
                 reject('Error updating Habit');

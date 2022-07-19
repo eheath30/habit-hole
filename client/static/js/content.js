@@ -128,12 +128,57 @@ async function renderProfile() {
             let today = new Date();
             today.setHours( today.getHours() + 1 );
             today = today.toISOString();
-            console.log(postData)
+            let latestIndex = postData.sleepdate.length
+            let latestDate = postData.sleepdate[latestIndex-1]
+            if (latestDate != undefined){latestDate = latestDate.split('T')[0]}
+            
+            if(today.split('T')[0] != latestDate){
+                const form = document.createElement('form')
+                const howManyHours = document.createElement('h3')
+                howManyHours.textContent = "How many hours did you sleep last night?"
+
+                const inputSleepTarget = document.createElement('input')
+                inputSleepTarget.type = "number"
+                inputSleepTarget.id = "sleephour"
+                inputSleepTarget.placeholder = "Enter an integer between 0-20"
+                inputSleepTarget.min = 0
+                inputSleepTarget.max = 20
+                
+                const button = document.createElement('button')
+                button.textContent = "Submit"
+
+                form.appendChild(howManyHours)
+                form.appendChild(inputSleepTarget)
+                form.appendChild(button)
+                profile.appendChild(form)
+                form.addEventListener('submit', updateSleepTime)
+            }
         }
     } catch (err) {
         console.warn(`Error: ${err}`);
     }
 }
+
+async function updateSleepTime(){
+    let today = new Date();
+    today.setHours( today.getHours() + 1 );
+    today = today.toISOString();
+    let username = localStorage.getItem('username');
+    sleephour = document.getElementById("sleephour").value
+    let usernameForm = { 'username': username, 'sleephour': sleephour, 'sleepday': today };
+    try {
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify( usernameForm )
+        }
+        const r = await fetch(`http://localhost:3000/habits/updateSleepTime`, options)
+        // window.location.reload()
+    } catch (err) {
+        console.warn(`Error: ${err}`);
+    }
+}
+
 
 async function updateSleepTarget(){
     let username = localStorage.getItem('username');

@@ -46,6 +46,16 @@ router.post('/updateSleepTarget', async (req, res) => {
     }
 })
 
+router.post('/updateSleepTime', async (req, res) => {
+    try {
+        console.log(req.body)
+        const user = await Habit.updateSleepTime(req.body.username, req.body.sleephour, req.body.sleepday)
+        res.json(user);
+    } catch (err) {
+        res.status(401).json({ err: err.message });
+    }
+})
+
 
 // router.get('/', verifyToken, async (req, res) => {
 //     try {
