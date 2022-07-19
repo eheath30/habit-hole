@@ -3,7 +3,7 @@
 body {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    color: #3b5998;
+    color: black;
     font-weight: bold;
 }
 
@@ -13,24 +13,24 @@ nav {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
-    padding: 75px;
-    background-color: #3b5998;
-    color: white;
+    padding: 25px;
+    background-color: oldlace;
+    color: black;
 }
 
 #logo { width: 100%; }
 
 a { text-decoration: none; }
 
-nav a { color: white; }
+nav a { color: black; }
 
-nav button, input[type='submit'] { 
+nav button, input[type='submit'] {
     border: none;
     color: white;
-    background: #3b5998;
+    background: black;
     font-weight: inherit;
     font-size: inherit;
-    padding: 0;
+    padding: 2;
 }
 
 #feed {
@@ -39,7 +39,7 @@ nav button, input[type='submit'] {
 }
 
 .post {
-    border: 1px solid #3b5998;
+    border: 1px solid black;
     text-align: justify;
     padding: 10px 50px;
     margin: 5px;
