@@ -57,8 +57,8 @@ describe("API server", () => {
   //   request(api).get("/posts/1/comments/1e111e47l50yg8bd").expect(200, done);
   // });
 
-  it("responds to a unknown post id with a 404", (done) => {
-    request(api).get("/posts/42").expect(404).expect({}, done);
+  it("responds to a unknown id with a 404", (done) => {
+    request(api).get("/habits/42").expect(404).expect({}, done);
   });
 
   it("responds to non existing paths with 404", (done) => {

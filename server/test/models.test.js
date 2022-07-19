@@ -2,7 +2,7 @@ const { JsonWebTokenError } = require("jsonwebtoken");
 const userData = require("../data/user.json");
 const User = require("../models/user.js");
 
-Jest.mock(User.)
+
 // const uniqid = require("uniqid");
 // jest.mock("uniqid");
 describe("Models", () => {
