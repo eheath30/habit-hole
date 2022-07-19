@@ -92,7 +92,9 @@ async function renderFeed() {
 async function renderProfile() {
     const profile = document.createElement('section');
     const greeting = document.createElement('h3');
-    greeting.textContent = `Hi there, ${localStorage.getItem('username')}!`
+    let name = `${localStorage.getItem('username')}`
+    const capitalisedName = name.charAt(0).toUpperCase() + name.slice(1);
+    greeting.textContent = `Hi there, ${capitalisedName}!`
     profile.appendChild(greeting);
     main.appendChild(profile);
 
