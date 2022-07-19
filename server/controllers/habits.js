@@ -28,6 +28,35 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.post('/fetchUsername', async (req, res) => {
+    try {
+        const user = await Habit.findByUsername(req.body.username)
+        res.json(user);
+    } catch (err) {
+        res.status(401).json({ err: err.message });
+    }
+})
+
+router.post('/updateSleepTarget', async (req, res) => {
+    try {
+        const user = await Habit.updateSleepTarget(req.body.username, req.body.sleeptarget)
+        res.json(user);
+    } catch (err) {
+        res.status(401).json({ err: err.message });
+    }
+})
+
+router.post('/updateSleepTime', async (req, res) => {
+    try {
+        console.log(req.body)
+        const user = await Habit.updateSleepTime(req.body.username, req.body.sleephour, req.body.sleepday)
+        res.json(user);
+    } catch (err) {
+        res.status(401).json({ err: err.message });
+    }
+})
+
+
 // router.get('/', verifyToken, async (req, res) => {
 //     try {
 //         const posts = await Post.all

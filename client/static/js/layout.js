@@ -31,7 +31,7 @@ function updateMain(path) {
             case '#register':
                 renderRegisterForm(); break;
             case '#dashboard':
-                renderDashboard(); break;
+                renderFeed(); break;
             case '#profile':
                 renderProfile(); break;
             default:
@@ -60,3 +60,5 @@ function updateContent(){
 }
 
 updateContent();
+
+// module.exports = {updateContent: updateContent, createNavLink: createNavLink, updateMain: updateMain, updateNav: updateNav}

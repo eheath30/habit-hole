@@ -8,7 +8,6 @@ async function requestLogin(e){
         }
         const r = await fetch(`http://localhost:3000/auth/login`, options)
         const data = await r.json()
-        console.log(data)
         if (data.err){ throw Error(data.err); }
         login(data);
     } catch (err) {
@@ -36,11 +35,11 @@ async function requestRegistration(e) {
 function login(data){
     // localStorage.setItem('username', data.user);
     const payload = jwt_decode(data.token);;
-    console.log(payload, "payload");
-    console.log(data, "data");
+    // console.log(payload, "payload");
+    // console.log(data, "data");
     localStorage.setItem('token', data.token);
     localStorage.setItem('username', payload.username);
-    location.hash = '#dashboard';
+    location.hash = '#profile';
 }
 
 function logout(){
@@ -52,3 +51,5 @@ function currentUser(){
     const username = localStorage.getItem('username')
     return username;
 }
+
+module.exports = {currentUser, logout, login, requestRegistration, requestLogin};
