@@ -71,16 +71,19 @@ async function renderFeed() {
         }
         const r = await fetch(`http://localhost:3000/habits/fetchUsername`, options)
         const postData = await r.json()
-        const post = document.createElement('div');
-        post.className = 'post';
-        const user = document.createElement('h3');
-        const body = document.createElement('p');
-        user.textContent = postData.username;
-        body.textContent = postData.sleeptarget;
-        post.appendChild(user);
-        post.appendChild(body);
-        feed.appendChild(post);
-        main.appendChild(feed);
+        // const post = document.createElement('div');
+        // post.className = 'post';
+        // const user = document.createElement('h3');
+        // const body = document.createElement('p');
+        // user.textContent = postData.username;
+        // body.textContent = postData.sleeptarget;
+        // post.appendChild(user);
+        // post.appendChild(body);
+        // feed.appendChild(post);
+        // main.appendChild(feed);
+
+        Dashboard(postData)
+
     } catch (err) {
         console.warn(`Error: ${err}`);
     }
@@ -114,7 +117,7 @@ async function renderProfile() {
             inputSleepTarget.placeholder = "Enter an integer between 1-16"
             inputSleepTarget.min = 1
             inputSleepTarget.max = 16
-            
+
             const button = document.createElement('button')
             button.textContent = "Submit"
 
@@ -123,7 +126,7 @@ async function renderProfile() {
             form.appendChild(button)
             profile.appendChild(form)
             form.addEventListener('submit', updateSleepTarget)
-            
+
         } else {
             let today = new Date();
             today.setHours( today.getHours() + 1 );
@@ -150,8 +153,63 @@ async function updateSleepTarget(){
     } catch (err) {
         console.warn(`Error: ${err}`);
     }
-    
+
 }
+
+
+function Dashboard(postData) {
+    console.log(postData);
+    let canvas = document.createElement('canvas');
+    canvas.width = "400";
+    canvas.height = "300";
+    canvas.id = "myChart"
+    main.appendChild(canvas)
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [...postData.sleepdate],
+            datasets: [{
+                label: '# of hours sleep',
+                data: [...postData.sleephours],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+}
+
+
+
+
+
 
 function render404() {
     const error = document.createElement('h2');
