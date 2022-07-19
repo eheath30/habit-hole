@@ -108,6 +108,22 @@ async function renderProfile() {
         const postData = await r.json()
         if (postData.sleeptarget == null){
             const form = document.createElement('form')
+
+            const howOftenText = document.createElement('h3')
+            howOftenText.textContent = "How often do you want to track your sleep?"
+
+
+            const howOfteninput = document.createElement('select')
+
+            const dailyChoice = document.createElement('option')
+            dailyChoice.textContent = "Daily"
+
+            howOfteninput.appendChild(dailyChoice)
+            profile.appendChild(howOftenText)
+            profile.appendChild(howOfteninput)
+
+
+
             const howManyHours = document.createElement('h3')
             howManyHours.textContent = "How many hours do you want to sleep per night?"
 
@@ -134,9 +150,13 @@ async function renderProfile() {
             let latestIndex = postData.sleepdate.length
             let latestDate = postData.sleepdate[latestIndex-1]
             if (latestDate != undefined){latestDate = latestDate.split('T')[0]}
-            
+
             if(today.split('T')[0] != latestDate){
                 const form = document.createElement('form')
+
+                const howOften = document.createElement('h3')
+                howOften.textContent = "How often would you like to track you?"
+
                 const howManyHours = document.createElement('h3')
                 howManyHours.textContent = "How many hours did you sleep last night?"
 
@@ -146,7 +166,7 @@ async function renderProfile() {
                 inputSleepTarget.placeholder = "Enter an integer between 0-20"
                 inputSleepTarget.min = 0
                 inputSleepTarget.max = 20
-                
+
                 const button = document.createElement('button')
                 button.textContent = "Submit"
 
@@ -168,7 +188,14 @@ async function renderProfile() {
                     }
                 }
                 WellDone.textContent = `Well done, you are on a ${streak} day streak!`
+                award = document.createElement('img')
+                award.src = './static/images/example-award.png';
+                award.setAttribute('alt', 'award')
+                award.setAttribute('class', 'award')
+
+
                 profile.appendChild(WellDone)
+                profile.appendChild(award)
             }
         }
     } catch (err) {

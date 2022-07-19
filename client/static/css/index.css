@@ -22,7 +22,7 @@ nav {
 
 a { text-decoration: none; }
 
-nav a { color: black; }
+nav a { color: black; padding: 5px; }
 
 nav button, input[type='submit'] {
     border: none;
@@ -60,4 +60,8 @@ input {
 
 .disabled {
     opacity: 0.3;
+}
+
+.award {
+    width: 100px;
 }
