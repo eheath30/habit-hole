@@ -155,6 +155,20 @@ async function renderProfile() {
                 form.appendChild(button)
                 profile.appendChild(form)
                 form.addEventListener('submit', updateSleepTime)
+            } else{
+                const WellDone = document.createElement('h3')
+                let streak = 0
+                // let compare1 = new Date(postData.sleepdate[6].split('T')[0])
+                // let compare2 = new Date(postData.sleepdate[5].split('T')[0])
+                for (i = 0; i<postData.sleephours.length; i++){
+                    if (postData.sleephours[i]>=postData.sleeptarget){
+                        streak = streak + 1
+                    } else if (postData.sleephours[i]<postData.sleeptarget) {
+                        streak = 0
+                    }
+                }
+                WellDone.textContent = `Well done, you are on a ${streak} day streak!`
+                profile.appendChild(WellDone)
             }
         }
     } catch (err) {
@@ -211,11 +225,14 @@ function Dashboard(postData) {
     main.appendChild(canvas)
 
     const ctx = document.getElementById('myChart').getContext('2d');
-
+    let dateArray=[]
+    for (i = 0; i<postData.sleepdate.length; i++){
+        dateArray.push(postData.sleepdate[i].split('T')[0])
+    }
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: [...postData.sleepdate],
+            labels: [...dateArray],
             datasets: [{
                 label: '# of hours sleep',
                 data: [...postData.sleephours],
