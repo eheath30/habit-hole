@@ -6,7 +6,7 @@ class User {
         this.username = data.username
         this.passwordDigest = data.password_digest
     }
-    
+
     static get all(){
         return new Promise(async (res, rej) => {
             try {
