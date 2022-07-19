@@ -82,7 +82,7 @@ async function renderFeed() {
         // feed.appendChild(post);
         // main.appendChild(feed);
 
-        Dashboard(postData)
+        Dashboard(postData, username)
 
     } catch (err) {
         console.warn(`Error: ${err}`);
@@ -255,14 +255,33 @@ async function updateSleepTarget(){
 }
 
 
-function Dashboard(postData) {
+function Dashboard(postData, username) {
     console.log(postData);
     let canvas = document.createElement('canvas');
-    canvas.width = "400";
-    canvas.height = "300";
     canvas.id = "myChart"
-    main.appendChild(canvas)
+    canvas.setAttribute('aria-label', 'My Line Chart')
+    canvas.setAttribute('role', 'canvas')
+    let altText = document.createElement('span')
+    altText.textContent = 'Line Chart mapping sleep data'
+    canvas.appendChild(altText);
 
+    let bootstrapdashboard = document.createElement('section')
+    bootstrapdashboard.innerHTML =`
+    <section class="container mx-auto">
+    <div class="jumbotron p-3 p-md-5 text-white rounded">
+  </div>
+  </section>
+  `
+let title = document.createElement('h2')
+let name = username
+const capitalisedName = name.charAt(0).toUpperCase() + name.slice(1);
+title.textContent = `${capitalisedName}'s historical sleep data`
+title.setAttribute('class', 'my-4')
+  main.appendChild(title)
+    main.appendChild(bootstrapdashboard)
+
+
+    document.getElementsByClassName("jumbotron")[0].appendChild(canvas)
     const ctx = document.getElementById('myChart').getContext('2d');
     let dateArray=[]
     for (i = 0; i<postData.sleepdate.length; i++){
@@ -273,7 +292,7 @@ function Dashboard(postData) {
         data: {
             labels: [...dateArray],
             datasets: [{
-                label: '# of hours sleep',
+                label: 'number of hours sleep',
                 data: [...postData.sleephours],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -291,13 +310,14 @@ function Dashboard(postData) {
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)'
                 ],
+                tension: 0.3,
                 borderWidth: 1
             }]
         },
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
                 }
             }
         }
