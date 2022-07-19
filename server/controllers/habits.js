@@ -28,9 +28,18 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/fetchUsername', async (req, res) => {
     try {
         const user = await Habit.findByUsername(req.body.username)
+        res.json(user);
+    } catch (err) {
+        res.status(401).json({ err: err.message });
+    }
+})
+
+router.post('/updateSleepTarget', async (req, res) => {
+    try {
+        const user = await Habit.updateSleepTarget(req.body.username, req.body.sleeptarget)
         res.json(user);
     } catch (err) {
         res.status(401).json({ err: err.message });

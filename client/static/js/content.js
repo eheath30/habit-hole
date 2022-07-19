@@ -63,14 +63,13 @@ async function renderFeed() {
     feed.id = 'feed';
     let username = localStorage.getItem('username');
     let usernameForm = { 'username': username };
-    
     try {
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( usernameForm )
         }
-        const r = await fetch(`http://localhost:3000/habits`, options)
+        const r = await fetch(`http://localhost:3000/habits/fetchUsername`, options)
         const postData = await r.json()
         const post = document.createElement('div');
         post.className = 'post';
@@ -87,12 +86,71 @@ async function renderFeed() {
     }
 }
 
-function renderProfile() {
+async function renderProfile() {
     const profile = document.createElement('section');
     const greeting = document.createElement('h3');
     greeting.textContent = `Hi there, ${localStorage.getItem('username')}!`
     profile.appendChild(greeting);
     main.appendChild(profile);
+
+    let username = localStorage.getItem('username');
+    let usernameForm = { 'username': username };
+    try {
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify( usernameForm )
+        }
+        const r = await fetch(`http://localhost:3000/habits/fetchUsername`, options)
+        const postData = await r.json()
+        if (postData.sleeptarget == null){
+            const form = document.createElement('form')
+            const howManyHours = document.createElement('h3')
+            howManyHours.textContent = "How many hours do you want to sleep per night?"
+
+            const inputSleepTarget = document.createElement('input')
+            inputSleepTarget.type = "number"
+            inputSleepTarget.id = "sleeptarget"
+            inputSleepTarget.placeholder = "Enter an integer between 1-16"
+            inputSleepTarget.min = 1
+            inputSleepTarget.max = 16
+            
+            const button = document.createElement('button')
+            button.textContent = "Submit"
+
+            form.appendChild(howManyHours)
+            form.appendChild(inputSleepTarget)
+            form.appendChild(button)
+            profile.appendChild(form)
+            form.addEventListener('submit', updateSleepTarget)
+            
+        } else {
+            let today = new Date();
+            today.setHours( today.getHours() + 1 );
+            today = today.toISOString();
+            console.log(postData)
+        }
+    } catch (err) {
+        console.warn(`Error: ${err}`);
+    }
+}
+
+async function updateSleepTarget(){
+    let username = localStorage.getItem('username');
+    sleeptarget = document.getElementById("sleeptarget").value
+    let usernameForm = { 'username': username, 'sleeptarget': sleeptarget };
+    try {
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify( usernameForm )
+        }
+        const r = await fetch(`http://localhost:3000/habits/updateSleepTarget`, options)
+        window.location.reload()
+    } catch (err) {
+        console.warn(`Error: ${err}`);
+    }
+    
 }
 
 function render404() {

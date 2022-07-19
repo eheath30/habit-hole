@@ -56,17 +56,18 @@ class Habit {
         });
     }
 
-    /*update() {
+    static updateSleepTarget(username, sleeptarget) {
         return new Promise (async (resolve, reject) => {
             try {
-                let updatedHabitData = await db.query(`UPDATE habits SET age = age + 1 WHERE userid = $1 RETURNING *;`, [ this.id ]);
-                let updatedDog = new Dog(updatedDogData.rows[0]);
-                resolve (updatedDog);
+                let user = await User.findByUsername(username);
+                let updatedHabitData = await db.query(`UPDATE habits SET sleeptarget = $2 WHERE userid = $1 RETURNING *;`, [ user.id, sleeptarget ]);
+                let updatedHabit = new Dog(updatedHabitData.rows[0]);
+                resolve (updatedHabit);
             } catch (err) {
-                reject('Error updating dog');
+                reject('Error updating Habit');
             }
         });
-    }*/
+    }
 }
 
 module.exports = Habit
