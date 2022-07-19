@@ -58,6 +58,7 @@ function renderRegisterForm() {
     main.appendChild(form);
 }
 
+
 async function renderFeed() {
     const feed = document.createElement('section');
     feed.id = 'feed';
@@ -100,3 +101,4 @@ function render404() {
     main.appendChild(error);
 }
 
+module.exports = {render404, renderProfile, renderFeed, renderRegisterForm, renderLoginForm, renderHomepage}

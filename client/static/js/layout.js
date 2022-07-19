@@ -60,3 +60,5 @@ function updateContent(){
 }
 
 updateContent();
+
+// module.exports = {updateContent: updateContent, createNavLink: createNavLink, updateMain: updateMain, updateNav: updateNav}

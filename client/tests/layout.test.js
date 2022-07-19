@@ -1,14 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-
-const html = fs.readFileSync(path.resolve(__dirname, 'C:/Users/Elliot Heath/FutureProof/lap2-databases/3week_project/habit-hole/client/index.html'), 'utf8');
-
-console.log(html)
+const renderDom = require('./helpers')
+let dom
+let document
 
 describe('index.html', () => {
-    afterEach(() => {
-    document.getElementsByTagName('html')[0].innerHTML = '';
-  });
+    beforeEach( async () => {
+        dom = await renderDom('index.html');
+        document = await dom.window.document;
+    })
+
 
     describe('HTML elements', () => {
         test('it has a body', () => {
@@ -77,5 +78,17 @@ describe('index.html', () => {
             const nav = document.getElementsByTagName('nav')
             expect(nav).toBeTruthy();
         });
-    })
-});
+
+
+        // test('it has a header title', async () => {
+        // let h1 = document.querySelector('h1');
+        // expect(h1).toBeTruthy();
+        // })
+
+        // test('it has a header title', () => {
+        //     let header = document.querySelector('h1');
+        //     expect(header).toContain('Javascript in the Browser');
+        //     })
+        })
+
+    });

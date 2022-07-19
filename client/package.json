@@ -11,7 +11,11 @@
     "coverage": "jest --coverage"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "verbose": true,
+    "testEnvironmentOptions": {
+      "url": "http://localhost/"
+  }
   },
   "keywords": [],
   "author": "",
