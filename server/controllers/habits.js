@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 const jwt = require("jsonwebtoken")
 
 const Habit = require('../models/habit');
 
-function verifyToken(req, res, next) {
+/*function verifyToken(req, res, next) {
     const token = req.headers["authorization"];
     if (token) {
         jwt.verify(token, process.env.SECRET, async (err, data) => {
@@ -17,36 +17,65 @@ function verifyToken(req, res, next) {
     } else {
         res.status(403).json({err: "missing token"})
     }
-}
+}*/
 
-router.get('/', async (req, res) => {
+// router.get('/', async (req, res) => {
+//     try {
+//         const posts = await Habit.all
+//         res.json(posts)
+//     } catch (err) {
+//         res.status(500).send({ err })
+//     }
+// })
+
+async function index (req, res) {
     try {
         const posts = await Habit.all
-        res.json(posts)
+        res.status(200).json(posts)
     } catch (err) {
         res.status(500).send({ err })
     }
-})
+}
 
-router.post('/fetchUsername', async (req, res) => {
+// router.post('/fetchUsername', async (req, res) => {
+//     try {
+//         const user = await Habit.findByUsername(req.body.username)
+//         res.json(user);
+//     } catch (err) {
+//         res.status(401).json({ err: err.message });
+//     }
+// })
+
+async function fetchUsername (req, res) {
     try {
         const user = await Habit.findByUsername(req.body.username)
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         res.status(401).json({ err: err.message });
     }
-})
+}
 
-router.post('/updateSleepTarget', async (req, res) => {
+// router.post('/updateSleepTarget', async (req, res) => {
+//     try {
+//         const user = await Habit.updateSleepTarget(req.body.username, req.body.sleeptarget)
+//         res.json(user);
+//     } catch (err) {
+//         res.status(401).json({ err: err.message });
+//     }
+// })
+
+async function sleepTarget (req, res) {
     try {
         const user = await Habit.updateSleepTarget(req.body.username, req.body.sleeptarget)
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         res.status(401).json({ err: err.message });
     }
-})
+}
 
-router.post('/updateSleepTime', async (req, res) => {
+
+
+/*router.post('/updateSleepTime', async (req, res) => {
     try {
         console.log(req.body)
         const user = await Habit.updateSleepTime(req.body.username, req.body.sleephour, req.body.sleepday)
@@ -54,8 +83,17 @@ router.post('/updateSleepTime', async (req, res) => {
     } catch (err) {
         res.status(401).json({ err: err.message });
     }
-})
+})*/
 
+async function sleepTime (req, res) {
+    try {
+        console.log(req.body)
+        const user = await Habit.updateSleepTime(req.body.username, req.body.sleephour, req.body.sleepday)
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(401).json({ err: err.message });
+    }
+}
 
 // router.get('/', verifyToken, async (req, res) => {
 //     try {
@@ -66,4 +104,9 @@ router.post('/updateSleepTime', async (req, res) => {
 //     }
 // })
 
-module.exports = router
+module.exports = {
+    index,
+    fetchUsername,
+    sleepTime,
+    sleepTarget
+}
