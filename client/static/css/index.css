@@ -11,10 +11,7 @@ nav {
     position: static;
     top: 0;
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
     padding: 25px;
-    background-color: oldlace;
     color: black;
 }
 
@@ -48,7 +45,6 @@ nav button, input[type='submit'] {
 form {
     display: flex;
     flex-direction: column;
-    padding: 50px;
     margin: 20px auto;
     width: 50%;
 }
@@ -64,4 +60,8 @@ input {
 
 .award {
     width: 100px;
+}
+
+.nav-link {
+    font-size: larger;
 }
