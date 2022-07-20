@@ -71,7 +71,7 @@ function renderLoginForm() {
     title.textContent = 'Login';
     let card = document.createElement('div');
     card.appendChild(title);
-     card.setAttribute('class', 'p-4 p-md-5 mb-4 text-white rounded bg-secondary');
+     card.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
      card.appendChild(form)
     main.appendChild(card);
 
@@ -97,7 +97,7 @@ function renderRegisterForm() {
     title.textContent = 'Register for a free account';
     let card = document.createElement('div');
     card.appendChild(title);
-     card.setAttribute('class', 'p-4 p-md-5 mb-4 text-white rounded bg-secondary');
+     card.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
      card.appendChild(form)
     main.appendChild(card);
 }
@@ -139,6 +139,7 @@ async function renderProfile() {
     let name = `${localStorage.getItem('username')}`
     const capitalisedName = name.charAt(0).toUpperCase() + name.slice(1);
     greeting.textContent = `Hi there, ${capitalisedName}!`
+    greeting.setAttribute('class', 'mb-5');
     profile.appendChild(greeting);
     main.appendChild(profile);
 
@@ -163,6 +164,7 @@ async function renderProfile() {
 
             const dailyChoice = document.createElement('option')
             dailyChoice.textContent = "Daily"
+            howOfteninput.setAttribute('class', 'form-select border-secondary rounded')
 
             howOfteninput.appendChild(dailyChoice)
             profile.appendChild(howOftenText)
@@ -174,6 +176,7 @@ async function renderProfile() {
             howManyHours.textContent = "How many hours do you want to sleep per night?"
 
             const inputSleepTarget = document.createElement('input')
+            inputSleepTarget.setAttribute('class', 'rounded border-secondary')
             inputSleepTarget.type = "number"
             inputSleepTarget.id = "sleeptarget"
             inputSleepTarget.placeholder = "Enter an integer between 1-16"
@@ -182,11 +185,15 @@ async function renderProfile() {
 
             const button = document.createElement('button')
             button.textContent = "Submit"
+            button.setAttribute('class', 'btn btn-light')
 
             form.appendChild(howManyHours)
             form.appendChild(inputSleepTarget)
+            linebreak = document.createElement("br");
+            form.appendChild(linebreak);
             form.appendChild(button)
             profile.appendChild(form)
+            profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
             form.addEventListener('submit', updateSleepTarget)
 
         } else {
@@ -212,14 +219,21 @@ async function renderProfile() {
                 inputSleepTarget.placeholder = "Enter an integer between 0-20"
                 inputSleepTarget.min = 0
                 inputSleepTarget.max = 20
+                inputSleepTarget.setAttribute('class', 'form-control')
 
                 const button = document.createElement('button')
                 button.textContent = "Submit"
+                button.setAttribute('class', 'btn btn-danger')
 
                 form.appendChild(howManyHours)
+                linebreak = document.createElement("br");
+            form.appendChild(linebreak);
                 form.appendChild(inputSleepTarget)
+                linebreak = document.createElement("br");
+            form.appendChild(linebreak);
                 form.appendChild(button)
                 profile.appendChild(form)
+                profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
                 form.addEventListener('submit', updateSleepTime)
             } else{
 
@@ -241,6 +255,7 @@ async function renderProfile() {
                     zeroStreak.textContent = `you currently have a 0 day hot-streak.`
                     profile.appendChild(tryHarder)
                     profile.appendChild(zeroStreak)
+                    profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-danger');
                 }
                 else {
                     const WellDone = document.createElement('h3')
@@ -251,6 +266,7 @@ async function renderProfile() {
                     award.setAttribute('class', 'award')
                     profile.appendChild(WellDone)
                     profile.appendChild(award)
+                    profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-success');
                 }
 
 
@@ -318,6 +334,7 @@ function Dashboard(postData, username) {
   </div>
   </section>
   `
+  bootstrapdashboard.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-light');
 let title = document.createElement('h2')
 let name = username
 const capitalisedName = name.charAt(0).toUpperCase() + name.slice(1);

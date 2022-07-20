@@ -25,7 +25,7 @@ async function requestRegistration(e) {
         }
         const r = await fetch(`http://localhost:3000/auth/register`, options)
         const data = await r.json()
-        if (data.err){ alert('That username is already taken'); throw Error(data.err) }
+        if (data.err){ alert('That username is already taken'); window.location.reload(); throw Error(data.err);}
         requestLogin(e);
     } catch (err) {
         console.warn(err);
