@@ -7,11 +7,13 @@ app.use(bodyParser.json())
 app.use(cors('*'));
 app.use(express.json());
 
-const controllers = require('./controllers');
+const userRoutes = require('./routes/users')
+const habitsRoutes = require('./routes/habits')
+const authRoutes = require('./routes/auth')
 
-app.use('/habits', controllers.habits);
-app.use('/users', controllers.users);
-app.use('/auth', controllers.auth);
+app.use('/habits', habitsRoutes);
+app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => res.json({ message: 'Welcome' }));
 module.exports = app
