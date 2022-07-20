@@ -44,6 +44,7 @@ function updateMain(path) {
 
 function createNavLink(route){
     const link = document.createElement('a');
+    link.setAttribute('class', 'nav-link text-dark');
     link.textContent = route === '#' ? 'Home' : `${route[1].toUpperCase()}${route.substring(2)}`;
     link.href = route;
     return link;
