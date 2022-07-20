@@ -2,8 +2,8 @@ TRUNCATE users, habits RESTART IDENTITY;
 
 INSERT INTO users (username, password_digest) 
 VALUES
-('username', 'password'),
-('username1', 'password1');
+('username', '$2a$10$9LR1x94XKwxDVoWRw6CZA.VWXMPD7I9wpI.zKcJMTCdgNwduIFSEO'),
+-- ('username1', 'password1');
 
 INSERT INTO habits (userid, sleeptarget, sleepdate, sleephours) 
 VALUES
