@@ -80,8 +80,8 @@ function renderLoginForm() {
 function renderRegisterForm() {
     const fields = [
         { tag: 'input', attributes: { type: 'text', name: 'username', placeholder: 'Username', class:"form-control my-1" } },
-        { tag: 'input', attributes: { type: 'password', name: 'password', placeholder: 'Password', class:"form-control my-1" } },
-        { tag: 'input', attributes: { type: 'password', name: 'passwordConfirmation', placeholder: 'Confirm Password', class:"form-control my-1" } },
+        { tag: 'input', attributes: { type: 'password', name: 'password', placeholder: 'Password', class:"form-control my-1", id:"password" } },
+        { tag: 'input', attributes: { type: 'password', name: 'passwordConfirmation', placeholder: 'Confirm Password', class:"form-control my-1", id:"password2" } },
         { tag: 'input', attributes: { type: 'submit', value: 'Create Account', class:"btn btn-dark my-1"} }
     ]
     const form = document.createElement('form');
@@ -347,8 +347,10 @@ title.setAttribute('class', 'my-4')
     document.getElementsByClassName("jumbotron")[0].appendChild(canvas)
     const ctx = document.getElementById('myChart').getContext('2d');
     let dateArray=[]
-    for (i = 0; i<postData.sleepdate.length; i++){
+    let sleepTargetArray=[]
+        for (i = 0; i<postData.sleepdate.length; i++){
         dateArray.push(postData.sleepdate[i].split('T')[0])
+            sleepTargetArray.push(postData.sleeptarget)
     }
     const myChart = new Chart(ctx, {
         type: 'line',
@@ -356,7 +358,7 @@ title.setAttribute('class', 'my-4')
             labels: [...dateArray],
             datasets: [{
                 label: 'number of hours sleep',
-                data: [...postData.sleephours],
+                data: [...postData.sleephours,],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -375,6 +377,17 @@ title.setAttribute('class', 'my-4')
                 ],
                 tension: 0.3,
                 borderWidth: 1
+            },
+            {
+                label: 'Sleep Target',
+                data: [...sleepTargetArray],
+
+                borderColor: [
+                    'green',
+                ],
+                tension: 0.3,
+                borderWidth: 1,
+                pointRadius: 0,
             }]
         },
         options: {
