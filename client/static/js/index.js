@@ -10,3 +10,5 @@ async function getAllHabits(){
         console.warn(err);
     }
 }
+
+module.exports = {getAllHabits}
