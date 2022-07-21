@@ -9,7 +9,4 @@ async function getAllHabits(){
     } catch (err) {
         console.warn(err);
     }
-
-    // async
-
 }

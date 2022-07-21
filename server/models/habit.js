@@ -27,7 +27,6 @@ class Habit {
     static findByUsername(username) {
         return new Promise(async (res, rej) => {
             try {
-                //const username = await res.body;
                 let result = await db.query(`SELECT habits.*, users.username as     username
                                                 FROM habits
                                                 JOIN users ON habits.userid = users.id

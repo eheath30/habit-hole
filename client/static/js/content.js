@@ -115,17 +115,6 @@ async function renderFeed() {
         }
         const r = await fetch(`http://localhost:3000/habits/fetchUsername`, options)
         const postData = await r.json()
-        // const post = document.createElement('div');
-        // post.className = 'post';
-        // const user = document.createElement('h3');
-        // const body = document.createElement('p');
-        // user.textContent = postData.username;
-        // body.textContent = postData.sleeptarget;
-        // post.appendChild(user);
-        // post.appendChild(body);
-        // feed.appendChild(post);
-        // main.appendChild(feed);
-
         Dashboard(postData, username)
 
     } catch (err) {
@@ -159,7 +148,6 @@ async function renderProfile() {
             const howOftenText = document.createElement('h3')
             howOftenText.textContent = "How often do you want to track your sleep?"
 
-
             const howOfteninput = document.createElement('select')
 
             const dailyChoice = document.createElement('option')
@@ -169,8 +157,6 @@ async function renderProfile() {
             howOfteninput.appendChild(dailyChoice)
             profile.appendChild(howOftenText)
             profile.appendChild(howOfteninput)
-
-
 
             const howManyHours = document.createElement('h3')
             howManyHours.textContent = "How many hours do you want to sleep per night?"
@@ -268,8 +254,6 @@ async function renderProfile() {
                     profile.appendChild(award)
                     profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-success');
                 }
-
-
             }
         }
     } catch (err) {
@@ -296,7 +280,6 @@ async function updateSleepTime(){
         console.warn(`Error: ${err}`);
     }
 }
-
 
 async function updateSleepTarget(){
     let username = localStorage.getItem('username');
@@ -334,15 +317,14 @@ function Dashboard(postData, username) {
   </div>
   </section>
   `
-  bootstrapdashboard.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-light');
-let title = document.createElement('h2')
-let name = username
-const capitalisedName = name.charAt(0).toUpperCase() + name.slice(1);
-title.textContent = `${capitalisedName}'s historical sleep data`
-title.setAttribute('class', 'my-4')
-  main.appendChild(title)
+    bootstrapdashboard.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-light');
+    let title = document.createElement('h2')
+    let name = username
+    const capitalisedName = name.charAt(0).toUpperCase() + name.slice(1);
+    title.textContent = `${capitalisedName}'s historical sleep data`
+    title.setAttribute('class', 'my-4')
+    main.appendChild(title)
     main.appendChild(bootstrapdashboard)
-
 
     document.getElementsByClassName("jumbotron")[0].appendChild(canvas)
     const ctx = document.getElementById('myChart').getContext('2d');
@@ -398,9 +380,6 @@ title.setAttribute('class', 'my-4')
             }
         }
     });
-
-
-
 }
 
 

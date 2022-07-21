@@ -11,7 +11,6 @@ async function requestLogin(e){
         if (data.err){ throw Error(data.err); }
         login(data);
     } catch (err) {
-        // console.warn(`Error: ${err}`);
         alert("Wrong username or password"); window.location.reload(); throw Error(data.err);
     }
 }
@@ -19,8 +18,6 @@ async function requestLogin(e){
 async function requestRegistration(e) {
     e.preventDefault();
     try {
-
-
         if (document.getElementById('password2').value === document.getElementById('password').value) {
             const options = {
                 method: 'POST',
@@ -40,7 +37,6 @@ async function requestRegistration(e) {
                  window.location.reload(); throw Error(data.err);}
             requestLogin(e);
         } else {
-            // input is valid -- reset the error message
             alert('Password Must be Matching.');
             window.location.reload();
         }
@@ -51,10 +47,7 @@ async function requestRegistration(e) {
 }
 
 function login(data){
-    // localStorage.setItem('username', data.user);
     const payload = jwt_decode(data.token);;
-    // console.log(payload, "payload");
-    // console.log(data, "data");
     localStorage.setItem('token', data.token);
     localStorage.setItem('username', payload.username);
     location.hash = '#profile';
