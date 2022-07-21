@@ -66,7 +66,7 @@ function renderLoginForm() {
             form.appendChild(field);
         })
     })
-    form.addEventListener('submit', requestLogin)
+    // form.addEventListener('submit', requestLogin)
 
     let title = document.createElement('h3');
     title.textContent = 'Login';
@@ -74,6 +74,7 @@ function renderLoginForm() {
     card.appendChild(title);
      card.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
      card.appendChild(form)
+    const main = document.querySelector('main')
     main.appendChild(card);
 
 }
@@ -93,13 +94,14 @@ function renderRegisterForm() {
             form.appendChild(field);
         })
     })
-    form.addEventListener('submit', requestRegistration)
+    // form.addEventListener('submit', requestRegistration)
     let title = document.createElement('h3');
     title.textContent = 'Register for a free account';
     let card = document.createElement('div');
     card.appendChild(title);
      card.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
      card.appendChild(form)
+     const main = document.querySelector('main')
     main.appendChild(card);
 }
 
@@ -131,6 +133,7 @@ async function renderProfile() {
     greeting.textContent = `Hi there, ${capitalisedName}!`
     greeting.setAttribute('class', 'mb-5');
     profile.appendChild(greeting);
+    let main = document.querySelector('main')
     main.appendChild(profile);
 
     let username = localStorage.getItem('username');
@@ -144,12 +147,23 @@ async function renderProfile() {
         const r = await fetch(`http://localhost:3000/habits/fetchUsername`, options)
         const postData = await r.json()
         if (postData.sleeptarget == null){
-            const form = document.createElement('form')
+            after()
+        }
+    } catch (err) {
+        console.warn(`Error: ${err}`);
+    }
+}
 
-            const howOftenText = document.createElement('h3')
-            howOftenText.textContent = "How often do you want to track your sleep?"
+function after(){
+    const profile = document.createElement('section');
+    const form = document.createElement('form')
+    const main = document.querySelector('main')
 
-            const howOfteninput = document.createElement('select')
+        const howOftenText = document.createElement('h3')
+        howOftenText.id = 'howOften'
+        howOftenText.textContent = "How often do you want to track your sleep?"
+
+        const howOfteninput = document.createElement('select')
 
             const dailyChoice = document.createElement('option')
             dailyChoice.textContent = "Daily"
@@ -182,23 +196,66 @@ async function renderProfile() {
             profile.appendChild(form)
             profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
             form.addEventListener('submit', updateSleepTarget)
+            main.appendChild(profile)
 
-        } else {
-            let today = new Date();
-            today.setHours( today.getHours() + 1 );
-            today = today.toISOString();
-            let latestIndex = postData.sleepdate.length
-            let latestDate = postData.sleepdate[latestIndex-1]
-            if (latestDate != undefined){latestDate = latestDate.split('T')[0]}
+            if(1==1){
+                split()
+            } else{
 
-            if(today.split('T')[0] != latestDate){
-                const form = document.createElement('form')
+                let streak = 0
 
-                const howOften = document.createElement('h3')
-                howOften.textContent = "How often would you like to track you?"
+                if (streak == 0) {
+                    tryHarder()
+                }
+                else {
+                    wellDone()
+                }
+            }
+}
+
+function wellDone(){
+    const profile = document.createElement('section')
+    const main = document.querySelector('main')
+    const WellDone = document.createElement('h3')
+    let streak = 5
+    WellDone.textContent = `Well done, you are on a ${streak} day streak!`
+    award = document.createElement('img')
+    award.src = './static/images/example-award.png';
+    award.setAttribute('alt', 'award')
+    award.setAttribute('class', 'award')
+    profile.appendChild(WellDone)
+    profile.appendChild(award)
+    profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-success');
+    main.appendChild(profile)
+}
+
+function tryHarder(){
+    const profile = document.createElement('section')
+    const main = document.querySelector('main')
+    const tryHarder = document.createElement('h3')
+    tryHarder.textContent = `You should be more mindful of your sleep time.`
+    const zeroStreak = document.createElement('h3')
+    zeroStreak.textContent = `You currently have a 0 day hot-streak.`
+    const linebreak = document.createElement("br");
+    const sadFace = document.createElement('img')
+    sadFace.setAttribute('src', './static/images/sad.jpg')
+    sadFace.setAttribute('class', 'rounded-circle w-25 h-25')
+    profile.appendChild(tryHarder)
+    profile.appendChild(zeroStreak)
+    profile.appendChild(linebreak);
+    profile.appendChild(sadFace)
+    profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-danger');
+    main.appendChild(profile)
+}
+
+function split(){
+    const profile = document.createElement('section')
+    const form = document.createElement('form')
+    const main = document.querySelector('main')
 
                 const howManyHours = document.createElement('h3')
                 howManyHours.textContent = "How many hours did you sleep last night?"
+                howManyHours.id = 'howManyHours'
 
                 const inputSleepTarget = document.createElement('input')
                 inputSleepTarget.type = "number"
@@ -221,59 +278,14 @@ async function renderProfile() {
                 form.appendChild(button)
                 profile.appendChild(form)
                 profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-secondary');
+                main.appendChild(profile)
                 form.addEventListener('submit', updateSleepTime)
-            } else{
-
-                let streak = 0
-                // let compare1 = new Date(postData.sleepdate[6].split('T')[0])
-                // let compare2 = new Date(postData.sleepdate[5].split('T')[0])
-                for (i = 0; i<postData.sleephours.length; i++){
-                    if (postData.sleephours[i]>=postData.sleeptarget){
-                        streak = streak + 1
-                    } else if (postData.sleephours[i]<postData.sleeptarget) {
-                        streak = 0
-                    }
-                }
-
-                if (streak == 0) {
-                    const tryHarder = document.createElement('h3')
-                    tryHarder.textContent = `You should be more mindful of your sleep time.`
-                    const zeroStreak = document.createElement('h3')
-                    zeroStreak.textContent = `You currently have a 0 day hot-streak.`
-                    const linebreak = document.createElement("br");
-                    const sadFace = document.createElement('img')
-                    sadFace.setAttribute('src', './static/images/sad.jpg')
-                    sadFace.setAttribute('class', 'rounded-circle w-25 h-25')
-                    profile.appendChild(tryHarder)
-                    profile.appendChild(zeroStreak)
-                    profile.appendChild(linebreak);
-                    profile.appendChild(sadFace)
-                    profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-danger');
-                }
-                else {
-                    const WellDone = document.createElement('h3')
-                    WellDone.textContent = `Well done, you are on a ${streak} day streak!`
-                    award = document.createElement('img')
-                    award.src = './static/images/example-award.png';
-                    award.setAttribute('alt', 'award')
-                    award.setAttribute('class', 'award')
-                    profile.appendChild(WellDone)
-                    profile.appendChild(award)
-                    profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-success');
-                }
-            }
-        }
-    } catch (err) {
-        console.warn(`Error: ${err}`);
-    }
 }
 
 async function updateSleepTime(){
-    let today = new Date();
-    today.setHours( today.getHours() + 1 );
-    today = today.toISOString();
-    let username = localStorage.getItem('username');
-    sleephour = document.getElementById("sleephour").value
+    let today = '2022-07-21T00:00:00.000Z'
+    let username = 'username'
+    sleephour = 8
     let usernameForm = { 'username': username, 'sleephour': sleephour, 'sleepday': today };
     try {
         const options = {
@@ -282,7 +294,7 @@ async function updateSleepTime(){
             body: JSON.stringify( usernameForm )
         }
         const r = await fetch(`http://localhost:3000/habits/updateSleepTime`, options)
-        window.location.reload()
+        // window.location.reload()
     } catch (err) {
         console.warn(`Error: ${err}`);
     }
@@ -290,7 +302,7 @@ async function updateSleepTime(){
 
 async function updateSleepTarget(){
     let username = localStorage.getItem('username');
-    sleeptarget = document.getElementById("sleeptarget").value
+    sleeptarget = 8
     let usernameForm = { 'username': username, 'sleeptarget': sleeptarget };
     try {
         const options = {
@@ -299,7 +311,7 @@ async function updateSleepTarget(){
             body: JSON.stringify( usernameForm )
         }
         const r = await fetch(`http://localhost:3000/habits/updateSleepTarget`, options)
-        window.location.reload()
+        // window.location.reload()
     } catch (err) {
         console.warn(`Error: ${err}`);
     }
@@ -328,6 +340,7 @@ function Dashboard(postData, username) {
     const capitalisedName = name.charAt(0).toUpperCase() + name.slice(1);
     title.textContent = `${capitalisedName}'s historical sleep data`
     title.setAttribute('class', 'my-4')
+    let main =document.querySelector('main')
     main.appendChild(title)
     main.appendChild(bootstrapdashboard)
 
@@ -339,7 +352,7 @@ function Dashboard(postData, username) {
         dateArray.push(postData.sleepdate[i].split('T')[0])
             sleepTargetArray.push(postData.sleeptarget)
     }
-    const myChart = new Chart(ctx, {
+    const myChart = `new Chart(ctx, {
         type: 'line',
         data: {
             labels: [...dateArray],
@@ -384,13 +397,14 @@ function Dashboard(postData, username) {
                 }
             }
         }
-    });
+    });`
 }
 
 function render404() {
     const error = document.createElement('h2');
     error.textContent = "Oops, we can't find that page sorry!";
+    main = document.querySelector('main')
     main.appendChild(error);
 }
 
-module.exports = {renderHomepage, renderLoginForm, renderRegisterForm, renderFeed, renderProfile, updateSleepTime, updateSleepTarget, Dashboard, render404}
+module.exports = {renderHomepage, renderLoginForm, renderRegisterForm, renderFeed, renderProfile, updateSleepTime, updateSleepTarget, Dashboard, render404, after, split, tryHarder, wellDone}

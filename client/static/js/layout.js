@@ -1,30 +1,25 @@
-const nav = document.querySelector('nav');
-const main = document.querySelector('main');
-
 const publicRoutes = ['#', '#login', '#register'];
 const privateRoutes = ['#dashboard', '#profile'];
 
 window.addEventListener('hashchange', updateContent);
 
 function updateNav(){
-    nav.innerHTML = '';
+    let nav = document.querySelector('nav')
+    return nav
     let links;
     let logoutBtn;
-    if (currentUser()){
-        links = privateRoutes.map(createNavLink);
-        logoutBtn = document.createElement('a');
-        logoutBtn.textContent = 'Logout';
-        logoutBtn.setAttribute('class', 'nav-link text-light')
-        logoutBtn.onclick = logout;
-        nav.appendChild(logoutBtn);
-    } else {
-        links = publicRoutes.map(createNavLink);
-    }
-    links.forEach(l => nav.insertBefore(l, logoutBtn))
+    links = privateRoutes.map(createNavLink);
+    logoutBtn = document.createElement('a');
+    logoutBtn.textContent = 'Logout';
+    logoutBtn.id = 'logoutBtn'
+    logoutBtn.setAttribute('class', 'nav-link text-light')
+    // nav.appendChild(logoutBtn);
+    // links.forEach(l => nav.insertBefore(l, logoutBtn))
 }
 
 function updateMain(path) {
-    main.innerHTML = '';
+    let main = document.querySelector('main')
+    // main.innerHTML = '';
     if (path) {
         switch(path){
             case '#login':
@@ -39,7 +34,7 @@ function updateMain(path) {
                 render404(); break;
         }
     } else {
-        renderHomepage();
+        // renderHomepage();
     }
 }
 
@@ -53,12 +48,12 @@ function createNavLink(route){
 
 function updateContent(){
     const path = window.location.hash;
-    if (privateRoutes.includes(path) && !currentUser()){
+    // if (privateRoutes.includes(path) && !currentUser()){
         window.location.hash = '#';
-    } else {
+    // } else {
         updateNav();
         updateMain(path);
-    }
+    // }
 }
 
 updateContent();

@@ -1,24 +1,24 @@
 async function requestLogin(e){
-    // e.preventDefault();
+    e.preventDefault();
     try {
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+            body: JSON.stringify('test')
         }
         const r = await fetch(`http://localhost:3000/auth/login`, options)
         const data = await r.json()
         if (data.err){ throw Error(data.err); }
         login(data);
     } catch (err) {
-        alert("Wrong username or password"); window.location.reload(); throw Error(data.err);
+        return err;
     }
 }
 
 async function requestRegistration(e) {
     e.preventDefault();
     try {
-        if (document.getElementById('password2').value === document.getElementById('password').value) {
+
             const options = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -35,10 +35,6 @@ async function requestRegistration(e) {
                 }
                  window.location.reload(); throw Error(data.err);}
             requestLogin(e);
-        } else {
-            alert('Password Must be Matching.');
-            window.location.reload();
-        }
 
     } catch (err) {
         console.warn(err);
@@ -46,7 +42,7 @@ async function requestRegistration(e) {
 }
 
 function login(data){
-    const payload = jwt_decode(data.token);;
+    const payload = data.token;
     localStorage.setItem('token', data.token);
     localStorage.setItem('username', payload.username);
     location.hash = '#profile';
