@@ -12,7 +12,8 @@
     "dev": "watchify ./static/js/auth.js -o ./static/js/authbundle.js",
     "dev2": "watchify ./static/js/content.js -o ./static/js/contentbundle.js",
     "dev3": "watchify ./static/js/index.js -o ./static/js/indexbundle.js",
-    "dev4": "watchify ./static/js/layout.js -o ./static/js/layoutbundle.js"
+    "dev4": "watchify ./static/js/layout.js -o ./static/js/layoutbundle.js",
+    "devall": "watchify ./static/js/all.js -o ./static/js/allbundle.js"
   },
   "jest": {
     "testEnvironment": "jsdom"
@@ -21,11 +22,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest-environment-jsdom": "^28.1.3",
     "watchify": "^4.0.0"
   },
   "dependencies": {
     "jest": "^28.1.3",
-    "jest-fetch-mock": "^3.0.3"
+    "jest-environment-jsdom": "^28.1.3",
+    "jest-fetch-mock": "^3.0.3",
+    "jsdom": "^20.0.0"
   }
 }

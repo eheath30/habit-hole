@@ -12,8 +12,9 @@ function updateNav(){
     let logoutBtn;
     if (currentUser()){
         links = privateRoutes.map(createNavLink);
-        logoutBtn = document.createElement('button');
+        logoutBtn = document.createElement('a');
         logoutBtn.textContent = 'Logout';
+        logoutBtn.setAttribute('class', 'nav-link text-light')
         logoutBtn.onclick = logout;
         nav.appendChild(logoutBtn);
     } else {
@@ -44,7 +45,7 @@ function updateMain(path) {
 
 function createNavLink(route){
     const link = document.createElement('a');
-    link.setAttribute('class', 'nav-link text-dark');
+    link.setAttribute('class', 'nav-link text-light');
     link.textContent = route === '#' ? 'Home' : `${route[1].toUpperCase()}${route.substring(2)}`;
     link.href = route;
     return link;

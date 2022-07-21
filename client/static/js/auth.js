@@ -1,5 +1,5 @@
 async function requestLogin(e){
-    e.preventDefault();
+    // e.preventDefault();
     try {
         const options = {
             method: 'POST',
@@ -26,7 +26,6 @@ async function requestRegistration(e) {
             }
             const r = await fetch(`http://localhost:3000/auth/register`, options)
             const data = await r.json()
-            console.log(data.err)
             if (data.err){
                 if(data.err == "Error creating user: value too long for type character varying(16)") {
                     alert('Username is too long')

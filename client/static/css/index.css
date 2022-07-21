@@ -8,27 +8,17 @@ body {
 }
 
 nav {
-    position: static;
-    top: 0;
-    width: 100%;
-    padding: 25px;
-    color: black;
+    justify-content: space-between;
 }
 
-#logo { width: 100%; }
-
-a { text-decoration: none; }
-
-nav a { color: black; padding: 5px; }
-
-nav button, input[type='submit'] {
+/* nav button, input[type='submit'] {
     border: none;
     color: white;
     background: black;
     font-weight: inherit;
     font-size: inherit;
     padding: 2;
-}
+} */
 
 #feed {
     width: 50%;
@@ -64,4 +54,8 @@ input {
 
 .nav-link {
     font-size: larger;
+}
+
+main {
+    height: 85vh
 }

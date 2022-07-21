@@ -1,4 +1,68 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+async function requestLogin(e){
+    e.preventDefault();
+    try {
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+        }
+        const r = await fetch(`http://localhost:3000/auth/login`, options)
+        const data = await r.json()
+        if (data.err){ throw Error(data.err); }
+        login(data);
+    } catch (err) {
+        alert("Wrong username or password"); window.location.reload(); throw Error(data.err);
+    }
+}
+
+async function requestRegistration(e) {
+    e.preventDefault();
+    try {
+        if (document.getElementById('password2').value === document.getElementById('password').value) {
+            const options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+            }
+            const r = await fetch(`http://localhost:3000/auth/register`, options)
+            const data = await r.json()
+            if (data.err){
+                if(data.err == "Error creating user: value too long for type character varying(16)") {
+                    alert('Username is too long')
+                }
+                if(data.err == `Error creating user: duplicate key value violates unique constraint "users_username_key"`) {
+                    alert('Username already exists')
+                }
+                 window.location.reload(); throw Error(data.err);}
+            requestLogin(e);
+        } else {
+            alert('Password Must be Matching.');
+            window.location.reload();
+        }
+
+    } catch (err) {
+        console.warn(err);
+    }
+}
+
+function login(data){
+    const payload = jwt_decode(data.token);;
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('username', payload.username);
+    location.hash = '#profile';
+}
+
+function logout(){
+    localStorage.clear();
+    location.hash = '#login';
+}
+
+function currentUser(){
+    const username = localStorage.getItem('username')
+    return username;
+}
+
 function renderHomepage(){
     const homepage = document.createElement('div');
     homepage.innerHTML = `<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
@@ -237,11 +301,17 @@ async function renderProfile() {
 
                 if (streak == 0) {
                     const tryHarder = document.createElement('h3')
-                    tryHarder.textContent = `You should be more mindful of your sleep time`
+                    tryHarder.textContent = `You should be more mindful of your sleep time.`
                     const zeroStreak = document.createElement('h3')
-                    zeroStreak.textContent = `you currently have a 0 day hot-streak.`
+                    zeroStreak.textContent = `You currently have a 0 day hot-streak.`
+                    const linebreak = document.createElement("br");
+                    const sadFace = document.createElement('img')
+                    sadFace.setAttribute('src', './static/images/sad.jpg')
+                    sadFace.setAttribute('class', 'rounded-circle w-25 h-25')
                     profile.appendChild(tryHarder)
                     profile.appendChild(zeroStreak)
+                    profile.appendChild(linebreak);
+                    profile.appendChild(sadFace)
                     profile.setAttribute('class', 'shadow-lg p-4 p-md-5 mb-4 text-white rounded bg-danger');
                 }
                 else {
@@ -301,7 +371,6 @@ async function updateSleepTarget(){
 }
 
 function Dashboard(postData, username) {
-    console.log(postData);
     let canvas = document.createElement('canvas');
     canvas.id = "myChart"
     canvas.setAttribute('aria-label', 'My Line Chart')
@@ -388,6 +457,86 @@ function render404() {
     main.appendChild(error);
 }
 
-module.exports = {renderHomepage, renderLoginForm, renderRegisterForm, renderFeed, renderProfile, updateSleepTime, updateSleepTarget, Dashboard, render404}
+async function getAllHabits(){
+    try {
+        const options = {
+            headers: new Headers({"Authorization": localStorage.getItem('token')})
+        }
+        const response = await fetch('http://localhost:3000/habits', options);
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.warn(err);
+    }
+}
+
+const nav = document.querySelector('nav');
+const main = document.querySelector('main');
+
+const publicRoutes = ['#', '#login', '#register'];
+const privateRoutes = ['#dashboard', '#profile'];
+
+window.addEventListener('hashchange', updateContent);
+
+function updateNav(){
+    if (nav){
+    nav.innerHTML = '';
+    }
+    let links;
+    let logoutBtn;
+    if (currentUser()){
+        links = privateRoutes.map(createNavLink);
+        logoutBtn = document.createElement('a');
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.setAttribute('class', 'nav-link text-light')
+        logoutBtn.onclick = logout;
+        nav.appendChild(logoutBtn);
+    } else {
+        links = publicRoutes.map(createNavLink);
+    }
+    links.forEach(l => nav.insertBefore(l, logoutBtn))
+}
+
+function updateMain(path) {
+    main.innerHTML = '';
+    if (path) {
+        switch(path){
+            case '#login':
+                renderLoginForm(); break;
+            case '#register':
+                renderRegisterForm(); break;
+            case '#dashboard':
+                renderFeed(); break;
+            case '#profile':
+                renderProfile(); break;
+            default:
+                render404(); break;
+        }
+    } else {
+        renderHomepage();
+    }
+}
+
+function createNavLink(route){
+    const link = document.createElement('a');
+    link.setAttribute('class', 'nav-link text-light');
+    link.textContent = route === '#' ? 'Home' : `${route[1].toUpperCase()}${route.substring(2)}`;
+    link.href = route;
+    return link;
+}
+
+function updateContent(){
+    const path = window.location.hash;
+    if (privateRoutes.includes(path) && !currentUser()){
+        window.location.hash = '#';
+    } else {
+        updateNav();
+        updateMain(path);
+    }
+}
+
+updateContent();
+
+module.exports = {requestLogin, requestRegistration, login, logout, currentUser, renderHomepage, renderLoginForm, renderRegisterForm, renderFeed, renderProfile, updateSleepTime, updateSleepTarget, Dashboard, render404, getAllHabits, updateNav, updateMain, createNavLink, updateContent}
 
 },{}]},{},[1]);

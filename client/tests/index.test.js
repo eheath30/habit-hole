@@ -2,21 +2,23 @@ const fs = require('fs');
 const path = require('path');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
 
-let auth = require('../static/js/auth');
-
 global.fetch = require('jest-fetch-mock')
 
-describe('auth test', () => {
+const index = require('../static/js/index')
 
+describe('auth test', () => {
+    const event = { preventDefault: () => {} };
     describe('mode helpers', () => {
-        beforeEach(() => {
-            document.documentElement.innerHTML = html.toString()
+        beforeEach(() => { 
+            fetch.resetMocks() 
+            jest.spyOn(event, 'preventDefault');
         })
         
         describe('Page loads', () => {
-            test('Correct page loads', () => {
-                body = document.querySelector('body')
-                expect(body.className).toBe("bg-light")
+            test('it makes a fetch call to api', async () => {
+                await index.getAllHabits()
+                expect(fetch).toHaveBeenCalled()
+                // expect(fetch).toHaveBeenCalledWith("http://localhost:3000/habits")
             })
         })
     })

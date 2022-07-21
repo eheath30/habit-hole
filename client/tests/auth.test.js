@@ -2,12 +2,33 @@ const fs = require('fs');
 const path = require('path');
 const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
 
-let auth = require('../static/js/auth');
-
 global.fetch = require('jest-fetch-mock')
 
-describe('auth test', () => {
+const auth = require('../static/js/auth')
 
+
+
+// describe('auth test', () => {
+//     const event = { preventDefault: () => {} };
+//     describe('mode helpers', () => {
+//         // beforeEach(() => {
+//         //     document.documentElement.innerHTML = html.toString()
+//         // })
+//         beforeEach(() => { 
+//             fetch.resetMocks() 
+//             jest.spyOn(event, 'preventDefault');
+//         })
+        
+//         describe('Page loads', () => {
+//             test('it makes a fetch call to api', async () => {
+//                 await auth.requestLogin()
+//                 expect(fetch).toHaveBeenCalledWith("http://localhost:3000/auth/login")
+//             })
+//         })
+//     })
+// })
+
+describe('auth test', () => {
     describe('mode helpers', () => {
         beforeEach(() => {
             document.documentElement.innerHTML = html.toString()
