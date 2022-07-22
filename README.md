@@ -16,7 +16,7 @@ Client testing
 - To exit, press ctrl + c
 
 Server testing
-- Run contents of startTest.sh
+- Run contents of startTest.sh script
 - To exit, press ctrl + c and run contents on teardown.sh script
 
 ## Changelog
