@@ -14,6 +14,7 @@ Client testing
 - cd into client
 - Run npm test
 - To exit, press ctrl + c
+
 Server testing
 - Run contents of startTest.sh
 - To exit, press ctrl + c and run contents on teardown.sh script
